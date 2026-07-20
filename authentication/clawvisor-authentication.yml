@@ -1,0 +1,24 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/clawvisor-gateway-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: agentToken
+  type: http
+  scheme: bearer
+  description: Agent token (or dashboard JWT for admin-gated endpoints), sent as Authorization
+    Bearer header.
+  sources:
+  - openapi/clawvisor-gateway-openapi.yml
+- name: agentTokenHeader
+  type: apiKey
+  in: header
+  parameter: X-Clawvisor-Agent-Token
+  description: Agent token for the skill catalog endpoint.
+  sources:
+  - openapi/clawvisor-gateway-openapi.yml
