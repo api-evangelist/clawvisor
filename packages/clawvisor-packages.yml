@@ -1,0 +1,35 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/clawvisor/clawvisor
+description: >-
+  Clawvisor's distributables. The product is a self-hostable Go daemon
+  (`clawvisor-server`) installed via a shell script, from source, or Docker
+  Compose, plus an official Claude Code plugin distributed through a GitHub
+  plugin marketplace. Clawvisor does not (yet) publish a language client SDK on
+  npm/PyPI/etc; agents integrate over plain HTTP or MCP, so there is no `SDKs`
+  pointer — the CLI/daemon and plugin are the shipped packages.
+packages:
+  - language: go
+    registry: github-release
+    name: clawvisor-server
+    url: https://github.com/clawvisor/clawvisor
+    install: curl -fsSL https://raw.githubusercontent.com/clawvisor/clawvisor/main/scripts/install.sh | sh
+    official: true
+    kind: daemon-cli
+    note: Self-hosted gateway daemon + CLI + web dashboard. Requires Go 1.25+ / Node 18+ to build from source.
+  - language: docker
+    registry: docker
+    name: clawvisor
+    url: https://github.com/clawvisor/clawvisor/blob/main/docs/SETUP_DOCKER.md
+    install: make up
+    official: true
+    kind: container
+    note: docker compose (app + postgres).
+  - language: claude-code-plugin
+    registry: github-marketplace
+    name: clawvisor
+    url: https://github.com/clawvisor/cowork-plugins
+    install: claude plugin marketplace add clawvisor/cowork-plugins && /plugin install clawvisor@cowork-plugins
+    official: true
+    kind: agent-plugin
+    note: Official Clawvisor plugins for Claude Code (cloud + clawvisor-local variants).

@@ -1,0 +1,22 @@
+{
+  "provider": "clawvisor",
+  "sources": [
+    "clawvisor-auth-api-openapi.yml",
+    "clawvisor-catalog-api-openapi.yml",
+    "clawvisor-gateway-api-openapi.yml",
+    "clawvisor-tasks-api-openapi.yml",
+    "clawvisor-tokens-api-openapi.yml"
+  ],
+  "outputs": [
+    "clawvisor-auth-api-openapi.yml",
+    "clawvisor-catalog-api-openapi.yml",
+    "clawvisor-gateway-api-openapi.yml",
+    "clawvisor-tasks-api-openapi.yml",
+    "clawvisor-tokens-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

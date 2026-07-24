@@ -1,0 +1,42 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/clawvisor/clawvisor/blob/main/README.md#cli-reference
+description: >-
+  The `clawvisor-server` CLI — the primary interface for running and managing a
+  self-hosted Clawvisor gateway: install/configure the daemon, run it as a
+  service, connect agents, activate downstream services, and open the dashboard
+  or terminal UI. The binary itself is catalogued in packages/clawvisor-packages.yml.
+binary: clawvisor-server
+docs: https://github.com/clawvisor/clawvisor/blob/main/README.md#cli-reference
+commands:
+  setup_install:
+    - {name: install, description: Guided first-run — configure, install as a system service, start, connect services and agents, open the dashboard. --pair also pairs a mobile device.}
+    - {name: setup, description: Interactive configuration wizard (LLM provider, relay, telemetry). Re-run to reconfigure.}
+    - {name: update, description: Update to the latest release, or --version <tag> for a specific version.}
+    - {name: uninstall, description: Remove the Clawvisor system service and binary.}
+  daemon:
+    - {name: server, description: Start the gateway server (writes a one-time local magic session).}
+    - {name: start, description: Start the Clawvisor daemon.}
+    - {name: stop, description: Stop the daemon.}
+    - {name: restart, description: Restart the daemon.}
+    - {name: status, description: Show daemon status.}
+  services:
+    - {name: services list, description: List activated downstream services.}
+    - {name: services add, description: Activate a service (OAuth for Google, API key for GitHub/Slack/Notion, etc.).}
+    - {name: services remove, description: Deactivate a service.}
+  agents:
+    - {name: connect-agent, description: Auto-detect installed agents (Claude Code, Claude Desktop) and connect them (install skill + env vars, or configure MCP).}
+    - {name: agent create, description: Create an agent token.}
+    - {name: agent list, description: List agents.}
+    - {name: agent delete, description: Delete an agent.}
+  ui:
+    - {name: dashboard, description: Open the web dashboard.}
+    - {name: tui, description: Terminal dashboard — approvals and monitoring without leaving the terminal (--url, --token).}
+    - {name: pair, description: Pair a mobile device (QR) for remote approvals via the relay.}
+flows:
+  - name: Connect Claude Code
+    steps: [connect-agent claude-code]
+  - name: Connect Claude Desktop (MCP)
+    steps: [connect-agent claude-desktop]
+  - name: Local approvals in terminal
+    steps: [server, tui]

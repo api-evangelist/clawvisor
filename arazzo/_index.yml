@@ -1,0 +1,8 @@
+generated: '2026-07-18'
+method: derived
+source: arazzo/*.yml
+workflows:
+  - file: clawvisor-triage-inbox.yml
+    workflowId: approveScopeAndTriage
+    title: Approve scope and triage an inbox
+    summary: Declare a read-scoped task, wait for user approval, list/read messages under scope, complete.

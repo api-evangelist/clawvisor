@@ -1,0 +1,74 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  github.com/clawvisor/clawvisor README + agent protocol
+  (skills/clawvisor-agent-protocol.md); derived from
+  openapi/clawvisor-gateway-openapi.yml.
+description: >-
+  Cross-cutting request/response semantics for the Clawvisor gateway API. The
+  gateway's defining convention is TASK-SCOPED AUTHORIZATION: an agent declares a
+  task (purpose + authorized service/action pairs), the user approves the scope
+  once, and every gateway request is evaluated against restrictions, task scope,
+  and intent verification before credential injection and execution.
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer <agent_token>'
+  catalog_header: 'X-Clawvisor-Agent-Token: <agent_token>'
+  mcp: OAuth 2.1 (PKCE S256, dynamic client registration) at /mcp
+  notes: >-
+    Agents never hold downstream service credentials; Clawvisor vaults them
+    (AES-256-GCM) and injects scoped, short-lived handles at call time. See
+    authentication/clawvisor-authentication.yml.
+authorization_model:
+  layers:
+    - restrictions: Hard blocks the user sets; a matching action is blocked immediately.
+    - task_scope: Every request must attach to an approved task; in-scope auto_execute actions run without approval.
+    - per_request_approval: Actions with auto_execute=false, or requests without a task_id, go to the user.
+  intent_verification:
+    modes: [strict, lenient, off]
+    default: strict
+    note: LLM-checked that request params/reason match the declared purpose and expected_use.
+  chain_context:
+    description: >-
+      Structural facts (IDs, emails, phone numbers) extracted from prior adapter
+      results are fed into subsequent verification, so follow-up requests can
+      only target entities that appeared in earlier results.
+    session_tasks: automatic (scoped by task id)
+    standing_tasks: require a stable session_id on every request (else MISSING_SESSION_ID)
+idempotency:
+  supported: false
+  correlation_key: request_id
+  note: >-
+    request_id is a client-supplied correlation id, not a documented idempotency
+    key — it links a request to its callback and to the
+    POST /api/gateway/request/{request_id}/execute follow-up after approval. A
+    `restricted` result must be retried with a NEW request_id. Clawvisor does not
+    document idempotent replay/retention semantics, so no Idempotency contract is
+    asserted.
+async_and_long_poll:
+  long_poll: '?wait=true on POST /api/tasks and GET /api/tasks/{id} blocks until the task is approved/denied.'
+  callbacks:
+    description: 'Provide callback_url to receive an HTTP POST when a request or task resolves (see asyncapi/clawvisor-callbacks-webhooks.yml).'
+    types: [request, task]
+request_tracing:
+  request_id: Client-supplied per gateway request; echoed on callbacks and used by /execute.
+  audit_id: Server-issued unique id logged for every gateway request; returned in results and callbacks.
+  session_id: Groups related requests within one workflow invocation (required for standing tasks).
+error_envelope:
+  fields: [status, error, code]
+  status_field: >-
+    Gateway responses carry a semantic `status`: executed | pending | blocked |
+    restricted | pending_task_approval | pending_scope_expansion | task_expired |
+    error. See errors/clawvisor-problem-types.yml.
+versioning:
+  scheme: unversioned-path
+  note: API paths are unversioned (/api/...); the daemon/plugin carry a SemVer release (plugin 0.2.0). See lifecycle/clawvisor-lifecycle.yml.
+task_lifetimes:
+  - session: Default; TTL via expires_in_seconds.
+  - sliding: TTL auto-extends 10 min on each authorized tool_use; expires after idle.
+  - standing: Persists until the user revokes; cannot be expanded; requires session_id.
+cross_references:
+  authentication: authentication/clawvisor-authentication.yml
+  errors: errors/clawvisor-problem-types.yml
+  lifecycle: lifecycle/clawvisor-lifecycle.yml
+  webhooks: asyncapi/clawvisor-callbacks-webhooks.yml

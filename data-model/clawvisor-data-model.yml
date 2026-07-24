@@ -1,0 +1,65 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/clawvisor-gateway-openapi.yml + github.com/clawvisor/clawvisor README
+description: >-
+  Entity-relationship graph for the Clawvisor gateway, derived from the OpenAPI
+  schemas and the documented domain model (tasks, gateway requests, services,
+  restrictions, agents, tokens, audit log).
+entities:
+  - name: Task
+    description: A declared purpose plus authorized service/action scopes the user approves.
+    key: id
+    fields: [id, purpose, status, lifetime, authorized_actions, planned_calls, expires_at]
+  - name: AuthorizedAction
+    description: A service/action pair permitted within a task, with intent-verification settings.
+    fields: [service, action, auto_execute, expected_use, verification]
+  - name: GatewayRequest
+    description: A single action executed on a downstream service under a task.
+    key: request_id
+    fields: [request_id, task_id, session_id, service, action, params, reason, status, audit_id]
+  - name: Service
+    description: A downstream integration adapter (Gmail, GitHub, Slack, Stripe, ...).
+    fields: [service, actions, restricted_actions, activation]
+  - name: Restriction
+    description: A user-set hard block on a service/action pair.
+    fields: [service, action]
+  - name: Agent
+    description: A connected AI agent identity.
+    fields: [id, name]
+  - name: Token
+    description: A scoped agent token minted for an agent (admin-gated).
+    key: id
+    fields: [id, name, token, created_at]
+  - name: AuditLog
+    description: Immutable record of every gateway request and its outcome.
+    key: audit_id
+    fields: [audit_id, request_id, service, action, status, verification_result]
+relationships:
+  - from: Task
+    to: AuthorizedAction
+    type: has_many
+    via: authorized_actions
+  - from: GatewayRequest
+    to: Task
+    type: belongs_to
+    via: task_id
+  - from: GatewayRequest
+    to: Service
+    type: belongs_to
+    via: service
+  - from: GatewayRequest
+    to: AuditLog
+    type: has_one
+    via: audit_id
+  - from: Restriction
+    to: Service
+    type: belongs_to
+    via: service
+  - from: Token
+    to: Agent
+    type: belongs_to
+    via: agent
+  - from: Agent
+    to: Task
+    type: has_many
+    via: agent

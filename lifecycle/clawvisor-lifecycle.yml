@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: searched
+source: github.com/clawvisor/clawvisor (README, releases, plugin.json)
+description: >-
+  Lifecycle posture for the Clawvisor gateway. Clawvisor is early-stage
+  (YC Spring 2026) and self-labels experimental — its README carries an explicit
+  "use at your own risk / not security-audited" warning. API paths are
+  unversioned; the shipped daemon and Claude Code plugin carry SemVer releases
+  (plugin 0.2.0). No public status page or formal deprecation/sunset policy was
+  found at probe time.
+maturity: experimental
+versioning:
+  scheme: unversioned-path
+  api_paths: /api/... (no version segment)
+  release_channel: GitHub releases (clawvisor-server binary); plugin SemVer 0.2.0
+  update_command: clawvisor-server update [--version <tag>]
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No documented deprecation or RFC 8594 Sunset/Deprecation header policy at probe time.
+sla:
+  url: null
+  note: Enterprise plan advertises "dedicated support with SLAs" (custom); no public SLA document.
+status_page: null
+stability_warning: >-
+  README: "Clawvisor is experimental software under active development. It has
+  not been audited for security ... Do not use Clawvisor as your sole safeguard
+  for sensitive data or critical systems."
+deprecated_operations: []

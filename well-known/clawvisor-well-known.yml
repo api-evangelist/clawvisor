@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: searched
+description: >-
+  Results of probing the /.well-known/ discovery surface for the Clawvisor
+  hosts. app.clawvisor.com is a React SPA whose catch-all returns a 200 text/html
+  shell for most /.well-known/ paths (security.txt, openid-configuration) — those
+  are recorded as present-but-not-a-real-document and NOT saved. The RFC 8414
+  OAuth 2.0 Authorization Server Metadata document is real JSON and was saved
+  verbatim; it backs the MCP server's OAuth 2.1 flow.
+hosts:
+  - host: https://app.clawvisor.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        type: application/json
+        file: clawvisor-oauth-authorization-server.json
+      - path: /.well-known/security.txt
+        status: 200
+        type: text/html
+        note: SPA shell, not a real security.txt — not saved.
+      - path: /.well-known/openid-configuration
+        status: 200
+        type: text/html
+        note: SPA shell, not real OIDC discovery (server is OAuth 2.1, not OIDC) — not saved.
+      - path: /.well-known/api-catalog
+        status: 302
+      - path: /.well-known/ai-plugin.json
+        status: 302
+  - host: https://clawvisor.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 302
+      - path: /llms.txt
+        status: 200
+        type: text/plain
+        file: ../llms/clawvisor-llms.txt

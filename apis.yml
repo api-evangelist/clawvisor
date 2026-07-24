@@ -1,22 +1,170 @@
 aid: clawvisor
 name: Clawvisor
-description: Clawvisor is a company surfaced as a portfolio company of y-combinator and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Clawvisor is the authorization layer for AI agents — a Y Combinator (Spring
+  2026) security gateway that sits between an AI agent and the tools it acts on
+  (Gmail, Calendar, Drive, Contacts, GitHub, Slack, Notion, Linear, Stripe,
+  Twilio, iMessage). Agents never hold downstream credentials: they declare a
+  task describing their purpose and the service/action pairs they need, the user
+  approves that scope once, and Clawvisor enforces restrictions, task scope, and
+  LLM intent verification on every request before injecting vaulted, short-lived
+  credentials, executing through an adapter, and writing a full audit trail. It
+  ships open-core as a self-hostable Go daemon with a CLI, web dashboard, TUI,
+  and an OAuth 2.1 MCP server, plus an official Claude Code plugin. Agents
+  integrate over a plain HTTP gateway or MCP — no SDK or agent-code changes
+  required.
 url: https://raw.githubusercontent.com/api-evangelist/clawvisor/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-provider-surface
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://raw.githubusercontent.com/clawvisor/clawvisor/main/web/public/favicon.svg
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
-- Company
-apis: []
+- AI Agents
+- Authorization
+- Security
+- Identity
+- Access Control
+- MCP
+- Credential Management
+- Governance
+- Developer Tools
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: clawvisor:clawvisor-auth-api
+  name: Clawvisor Auth API
+  description: Local magic-link session exchange.
+  humanURL: https://github.com/clawvisor/clawvisor
+  baseURL: https://app.clawvisor.com
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/clawvisor-auth-api-openapi.yml
+  - type: Arazzo
+    url: arazzo/clawvisor-triage-inbox.yml
+- aid: clawvisor:clawvisor-catalog-api
+  name: Clawvisor Catalog API
+  description: Discover the services and actions available to the agent.
+  humanURL: https://github.com/clawvisor/clawvisor
+  baseURL: https://app.clawvisor.com
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/clawvisor-catalog-api-openapi.yml
+  - type: Arazzo
+    url: arazzo/clawvisor-triage-inbox.yml
+- aid: clawvisor:clawvisor-gateway-api
+  name: Clawvisor Gateway API
+  description: Execute authorized actions on downstream services through the gateway.
+  humanURL: https://github.com/clawvisor/clawvisor
+  baseURL: https://app.clawvisor.com
+  tags:
+  - Gateway
+  properties:
+  - type: OpenAPI
+    url: openapi/clawvisor-gateway-api-openapi.yml
+  - type: Arazzo
+    url: arazzo/clawvisor-triage-inbox.yml
+- aid: clawvisor:clawvisor-tasks-api
+  name: Clawvisor Tasks API
+  description: Declare, approve, expand, and complete task scopes.
+  humanURL: https://github.com/clawvisor/clawvisor
+  baseURL: https://app.clawvisor.com
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/clawvisor-tasks-api-openapi.yml
+  - type: Arazzo
+    url: arazzo/clawvisor-triage-inbox.yml
+- aid: clawvisor:clawvisor-tokens-api
+  name: Clawvisor Tokens API
+  description: Mint and revoke scoped agent tokens (admin-gated).
+  humanURL: https://github.com/clawvisor/clawvisor
+  baseURL: https://app.clawvisor.com
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/clawvisor-tokens-api-openapi.yml
+  - type: Arazzo
+    url: arazzo/clawvisor-triage-inbox.yml
+common:
+- type: DeveloperPortal
+  url: https://clawvisor.com
+- type: Documentation
+  url: https://github.com/clawvisor/clawvisor/tree/main/docs
+- type: APIReference
+  url: https://github.com/clawvisor/clawvisor#agent-integration
+- type: GettingStarted
+  url: https://github.com/clawvisor/clawvisor#get-started
+- type: GitHubOrganization
+  url: https://github.com/clawvisor
+- type: Support
+  url: https://github.com/clawvisor/clawvisor/issues
+- type: Pricing
+  url: https://clawvisor.com/pricing
+- type: SignUp
+  url: https://app.clawvisor.com/register
+- type: TermsOfService
+  url: https://clawvisor.com/terms
+- type: PrivacyPolicy
+  url: https://clawvisor.com/privacy
+- type: MCPServer
+  url: mcp/clawvisor-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/clawvisor-llms.txt
+- type: WellKnown
+  url: well-known/clawvisor-well-known.yml
+- type: Authentication
+  url: authentication/clawvisor-authentication.yml
+- type: Conventions
+  url: conventions/clawvisor-conventions.yml
+- type: ErrorCatalog
+  url: errors/clawvisor-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/clawvisor-lifecycle.yml
+- type: Conformance
+  url: conformance/clawvisor-conformance.yml
+- type: DataModel
+  url: data-model/clawvisor-data-model.yml
+- type: Webhooks
+  url: asyncapi/clawvisor-callbacks-webhooks.yml
+- type: Packages
+  url: packages/clawvisor-packages.yml
+- type: CLI
+  url: cli/clawvisor-cli.yml
+- type: DomainSecurity
+  url: security/clawvisor-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/clawvisor-agentic-access.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

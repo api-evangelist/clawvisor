@@ -1,0 +1,34 @@
+generated: '2026-07-18'
+method: searched
+spec_type: Webhooks
+source: github.com/clawvisor/clawvisor README (Callbacks section)
+description: >-
+  Clawvisor publishes no AsyncAPI document, but it documents a real outbound
+  webhook/callback surface: when a caller supplies a callback_url (on a task or a
+  gateway request), Clawvisor POSTs a JSON callback as those resolve. This
+  captures that webhook catalog. No streaming/AsyncAPI event bus is published, so
+  no AsyncAPI spec is asserted (not penalized).
+delivery:
+  transport: http-post
+  trigger: caller supplies callback_url on POST /api/tasks or POST /api/gateway/request
+  discriminator: type
+webhooks:
+  - name: request-callback
+    type: request
+    fires_when: A pending gateway request resolves (approved and executed, or fails).
+    payload:
+      type: request
+      request_id: string
+      status: executed | blocked | restricted | error
+      result: { summary: string, data: any }
+      audit_id: string
+  - name: task-callback
+    type: task
+    fires_when: A task is approved, denied, expanded, has an expansion denied, or expires.
+    payload:
+      type: task
+      task_id: string
+      status: approved | denied | scope_expanded | scope_expansion_denied | expired
+notes: >-
+  Callbacks are an alternative to long-polling (?wait=true / GET
+  /api/tasks/{id}). See conventions/clawvisor-conventions.yml.

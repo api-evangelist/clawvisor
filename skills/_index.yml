@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  github.com/clawvisor/clawvisor — provider-published agent skill
+  (skills/clawvisor/SKILL.md.tmpl) and integration-authoring skill
+  (skills/clawvisor-generate-integration.md), plus one pipeline-generated
+  marquee flow grounded in the gateway OpenAPI operationIds.
+skills:
+  - file: clawvisor-agent-protocol.md
+    name: Clawvisor agent protocol
+    method: searched
+    api: openapi/clawvisor-gateway-openapi.yml
+    operations: [fetchCatalog, createTask, getTask, expandTask, completeTask, gatewayRequest, executeGatewayRequest]
+    source: https://raw.githubusercontent.com/clawvisor/clawvisor/main/skills/clawvisor/SKILL.md.tmpl
+  - file: clawvisor-generate-integration.md
+    name: Generate a Clawvisor service integration (adapter YAML)
+    method: searched
+    source: https://raw.githubusercontent.com/clawvisor/clawvisor/main/skills/clawvisor-generate-integration.md
+  - file: clawvisor-triage-inbox.md
+    name: Triage an inbox safely through Clawvisor
+    method: generated
+    api: openapi/clawvisor-gateway-openapi.yml
+    operations: [fetchCatalog, createTask, getTask, gatewayRequest, expandTask, completeTask]

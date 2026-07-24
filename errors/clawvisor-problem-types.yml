@@ -1,0 +1,59 @@
+generated: '2026-07-18'
+method: searched
+format: semantic-status
+source: >-
+  github.com/clawvisor/clawvisor README (Response statuses table) + agent
+  protocol; derived from openapi/clawvisor-gateway-openapi.yml responses.
+description: >-
+  Clawvisor does not use RFC 9457 problem+json. Gateway responses return HTTP 200
+  with a semantic `status` field describing the authorization outcome, plus an
+  `error` message and machine `code` on failures. This catalog captures both the
+  gateway status vocabulary and the machine error codes documented in the agent
+  protocol.
+envelope:
+  fields:
+    status: Semantic authorization/execution outcome.
+    result: { summary: Human-readable summary, data: Adapter result payload }
+    audit_id: Server-issued audit log id for the request.
+    error: Failure message (on status=error).
+    code: Machine error code (on status=error).
+statuses:
+  - status: executed
+    meaning: Action completed; result in result.summary and result.data.
+    action: Use the result.
+  - status: pending
+    meaning: Awaiting human approval.
+    action: Use ?wait=true on the original POST, or call executeGatewayRequest after approval.
+  - status: blocked
+    meaning: A restriction (hard block) forbids this action.
+    action: Do not retry.
+  - status: restricted
+    meaning: Intent verification rejected the request.
+    action: Adjust params/reason and retry with a NEW request_id.
+  - status: pending_task_approval
+    meaning: Task declared but not yet approved by the user.
+    action: Long-poll getTask until active.
+  - status: pending_scope_expansion
+    meaning: Action is outside the approved task scope.
+    action: Call expandTask (POST /api/tasks/{id}/expand).
+  - status: task_expired
+    meaning: The task TTL elapsed.
+    action: Expand to extend, or create a new task.
+  - status: error
+    meaning: Execution failed.
+    action: Inspect the error and code fields.
+error_codes:
+  - code: SERVICE_NOT_CONFIGURED
+    status: error
+    meaning: The requested service has not been activated for the user.
+    remediation: Ask the user to activate the service (see fetch_catalog activatable list).
+  - code: MISSING_SESSION_ID
+    status: error
+    meaning: A gateway request on a standing task omitted the required session_id.
+    remediation: Generate one UUID per workflow invocation and pass it as session_id on every request.
+task_callback_statuses:
+  - approved
+  - denied
+  - scope_expanded
+  - scope_expansion_denied
+  - expired

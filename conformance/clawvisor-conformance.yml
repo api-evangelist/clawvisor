@@ -1,0 +1,47 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  well-known/clawvisor-oauth-authorization-server.json (RFC 8414 metadata),
+  github.com/clawvisor/clawvisor README, clawvisor.com/pricing; derived from
+  openapi/clawvisor-gateway-openapi.yml securitySchemes.
+description: >-
+  Which cross-cutting standards the Clawvisor gateway conforms to. Clawvisor's
+  MCP surface is a genuine OAuth 2.1 authorization server (published RFC 8414
+  metadata with PKCE S256 and dynamic client registration). It is NOT an OIDC
+  provider (no id_token / OIDC discovery — the 200 at /openid-configuration is a
+  SPA shell). Error responses do not use RFC 9457. SOC 2 is offered only as an
+  Enterprise-plan artifact, with no public trust page, so no published compliance
+  program is asserted.
+standards:
+  - id: oauth2.1
+    conforms: true
+    evidence: >-
+      /.well-known/oauth-authorization-server advertises authorization_code
+      grant, PKCE code_challenge_methods S256, and a registration_endpoint;
+      the /mcp server is documented as OAuth 2.1.
+  - id: rfc8414-oauth-as-metadata
+    conforms: true
+    evidence: well-known/clawvisor-oauth-authorization-server.json returns valid RFC 8414 JSON.
+  - id: rfc7591-dynamic-client-registration
+    conforms: true
+    evidence: registration_endpoint https://app.clawvisor.com/oauth/register present in AS metadata.
+  - id: pkce
+    conforms: true
+    evidence: code_challenge_methods_supported=[S256].
+  - id: mcp
+    conforms: true
+    evidence: Official MCP server at /mcp with 6 tools (see mcp/clawvisor-mcp.yml).
+  - id: bearer-token-auth
+    conforms: true
+    evidence: OpenAPI securitySchemes define http bearer (agent token) + apiKey header.
+  - id: oidc
+    conforms: false
+    evidence: No real OIDC discovery document; server issues no id_token (OAuth 2.1 only).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a semantic status/error/code envelope, not application/problem+json.
+  - id: soc2
+    conforms: partial
+    evidence: >-
+      clawvisor.com/pricing lists "SOC 2 artifacts" under the Enterprise plan
+      only; no public trust center or attestation was found at probe time.
