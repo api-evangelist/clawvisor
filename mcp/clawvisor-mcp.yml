@@ -2,14 +2,11 @@ generated: '2026-07-18'
 method: searched
 status: published
 source: https://github.com/clawvisor/clawvisor/blob/main/README.md
-description: >-
-  Clawvisor operates an official MCP (Model Context Protocol) server exposed at
-  the `/mcp` path of the gateway, authenticated with OAuth 2.1 (authorization
-  server https://app.clawvisor.com, RFC 8414 metadata at
-  well-known/clawvisor-oauth-authorization-server.json — PKCE S256, dynamic
-  client registration, authorization_code grant). It is used by Claude Desktop,
-  Hermes, and other MCP clients. A local stdio bridge ships in the CoWork plugin
-  (coworkplugin/plugin/.mcp.json) via `npx mcp-remote http://localhost:25297/mcp`.
+description: Clawvisor operates an official MCP (Model Context Protocol) server exposed at the `/mcp`
+  path of the gateway, authenticated with OAuth 2.1 (authorization server https://app.clawvisor.com, RFC
+  8414 metadata at well-known/clawvisor-oauth-authorization-server.json — PKCE S256, dynamic client registration,
+  authorization_code grant). It is used by Claude Desktop, Hermes, and other MCP clients. A local stdio
+  bridge ships in the CoWork plugin (coworkplugin/plugin/.mcp.json) via `npx mcp-remote http://localhost:25297/mcp`.
   Tool list captured verbatim from the Clawvisor README and agent protocol.
 server:
   name: clawvisor
@@ -23,25 +20,31 @@ local:
   transport: stdio
   install: npx mcp-remote http://localhost:25297/mcp
   source: https://github.com/clawvisor/cowork-plugins
-  note: >-
-    Distributed as the official Claude Code plugin "clawvisor" via
-    `claude plugin marketplace add clawvisor/cowork-plugins`.
+  note: Distributed as the official Claude Code plugin "clawvisor" via `claude plugin marketplace add
+    clawvisor/cowork-plugins`.
 tools:
-  - name: fetch_catalog
-    description: List available services, their actions, and which actions are restricted.
-    source_operation: openapi/clawvisor-gateway-openapi.yml#fetchCatalog
-  - name: create_task
-    description: Declare a task purpose and the authorized service/action scopes.
-    source_operation: openapi/clawvisor-gateway-openapi.yml#createTask
-  - name: get_task
-    description: Get a task's status; long-poll (wait) until approved or denied.
-    source_operation: openapi/clawvisor-gateway-openapi.yml#getTask
-  - name: expand_task
-    description: Request an action outside the current task scope.
-    source_operation: openapi/clawvisor-gateway-openapi.yml#expandTask
-  - name: complete_task
-    description: Mark a task complete and clean up chain-context facts.
-    source_operation: openapi/clawvisor-gateway-openapi.yml#completeTask
-  - name: gateway_request
-    description: Execute an authorized action on a downstream service under a task.
-    source_operation: openapi/clawvisor-gateway-openapi.yml#gatewayRequest
+- name: fetch_catalog
+  description: List available services, their actions, and which actions are restricted.
+  source_operation: openapi/clawvisor-gateway-openapi.yml#fetchCatalog
+- name: create_task
+  description: Declare a task purpose and the authorized service/action scopes.
+  source_operation: openapi/clawvisor-gateway-openapi.yml#createTask
+- name: get_task
+  description: Get a task's status; long-poll (wait) until approved or denied.
+  source_operation: openapi/clawvisor-gateway-openapi.yml#getTask
+- name: expand_task
+  description: Request an action outside the current task scope.
+  source_operation: openapi/clawvisor-gateway-openapi.yml#expandTask
+- name: complete_task
+  description: Mark a task complete and clean up chain-context facts.
+  source_operation: openapi/clawvisor-gateway-openapi.yml#completeTask
+- name: gateway_request
+  description: Execute an authorized action on a downstream service under a task.
+  source_operation: openapi/clawvisor-gateway-openapi.yml#gatewayRequest
+deployment:
+  mode: remote
+  endpoint: https://app.clawvisor.com/mcp
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

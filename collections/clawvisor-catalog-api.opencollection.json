@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clawvisor Gateway Auth Catalog API",
+    "version": "0.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch the agent service catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.clawvisor.com/api/skill/catalog",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Clawvisor-Agent-Token",
+              "value": "{{X-Clawvisor-Agent-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the services available to the agent, their supported actions, which actions are restricted (blocked), and services the agent can ask the user to activate. Authenticated with the agent token header."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

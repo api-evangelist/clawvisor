@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clawvisor Gateway Auth Tokens API",
+    "version": "0.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List agent tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.clawvisor.com/api/tokens"
+          },
+          "docs": "List agent tokens"
+        },
+        {
+          "info": {
+            "name": "Mint a scoped agent token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.clawvisor.com/api/tokens"
+          },
+          "docs": "Mint a long-lived scoped agent token (admin-gated, dashboard JWT)."
+        },
+        {
+          "info": {
+            "name": "Revoke an agent token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.clawvisor.com/api/tokens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revoke an agent token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

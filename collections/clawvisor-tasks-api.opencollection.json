@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clawvisor Gateway Auth Tasks API",
+    "version": "0.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.clawvisor.com/api/tasks"
+          },
+          "docs": "List the agent's active, standing, pending, and completed tasks."
+        },
+        {
+          "info": {
+            "name": "Declare a task scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.clawvisor.com/api/tasks",
+            "params": [
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query",
+                "description": "Long-poll until the task is approved or denied."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Declare a purpose and the authorized service/action pairs the agent needs. The task starts as `pending_approval`; the user approves the scope via dashboard, Telegram, or a mobile push. Use `?wait=true` to block until the user approves or denies in a single round-trip."
+        },
+        {
+          "info": {
+            "name": "Get a task (supports long-polling)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.clawvisor.com/api/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a task's current state. Use `?wait=true` to long-poll until the status changes to `active` or `denied`."
+        },
+        {
+          "info": {
+            "name": "Request a scope expansion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.clawvisor.com/api/tasks/:id/expand",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an action not in the original task scope. The user is notified and can approve or deny; on approval the action is added and the session task TTL is reset. Standing tasks cannot be expanded."
+        },
+        {
+          "info": {
+            "name": "Mark a task complete",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.clawvisor.com/api/tasks/:id/complete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Signal the task is done; chain-context facts are cleaned up."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

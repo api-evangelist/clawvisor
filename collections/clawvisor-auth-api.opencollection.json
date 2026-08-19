@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clawvisor Gateway Auth API",
+    "version": "0.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange a magic token for a refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.clawvisor.com/api/auth/magic"
+          },
+          "docs": "Local-mode session exchange — the TUI reads the one-time magic token written by the server and exchanges it for a refresh token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

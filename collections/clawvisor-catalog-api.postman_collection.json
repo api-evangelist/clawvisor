@@ -1,0 +1,184 @@
+{
+  "item": [
+    {
+      "id": "eebd8561-b825-48ad-b433-7f9c05483711",
+      "name": "Catalog",
+      "description": {
+        "content": "Discover the services and actions available to the agent.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f72d15bf-dc72-4686-9a72-d55f5689d996",
+          "name": "Fetch the agent service catalog",
+          "request": {
+            "name": "Fetch the agent service catalog",
+            "description": {
+              "content": "Returns the services available to the agent, their supported actions, which actions are restricted (blocked), and services the agent can ask the user to activate. Authenticated with the agent token header.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "skill",
+                "catalog"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Clawvisor-Agent-Token"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1816bfdb-a270-4165-899a-acd5d7ea2f7c",
+              "name": "Personalized service catalog.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "skill",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Clawvisor-Agent-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"services\": [\n    {\n      \"service\": \"string\",\n      \"actions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"restricted_actions\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"service\": \"string\",\n      \"actions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"restricted_actions\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"activatable\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a752c1c-3ef9-461f-9f86-b0ade068e16d",
+              "name": "Missing or invalid agent token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "skill",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Clawvisor-Agent-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.clawvisor.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4244425c-1391-4466-8cad-e8f3f27940d3",
+    "name": "Clawvisor Gateway Auth Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clawvisor gateway API — the authorization layer AI agents call to act on external services (Gmail, Calendar, Drive, Contacts, GitHub, Slack, Notion, Linear, Stripe, Twilio, iMessage) without ever holding the underlying credentials. Agents declare a **task** describing their purpose and the service/action pairs they need; the user approves the scope once; and every subsequent gateway request is checked against restrictions, task scope, intent verification, and (optionally) per-request human approval before Clawvisor injects credentials, executes through an adapter, and returns a clean semantic result. This description is GENERATED by the API Evangelist enrichment pipeline from Clawvisor's public README and agent protocol (skills/clawvisor/SKILL.md.tmpl); Clawvisor does not publish an OpenAPI document. Every path, method, field, and status below is documented in github.com/clawvisor/clawvisor.\n\nContact Support:\n Name: Clawvisor",
+      "type": "text/plain"
+    }
+  }
+}

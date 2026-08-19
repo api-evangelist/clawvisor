@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clawvisor Auth Gateway API",
+    "version": "0.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gateway",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute an authorized action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.clawvisor.com/api/gateway/request",
+            "params": [
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a single action on a downstream service under an approved task. Clawvisor checks restrictions, validates the action against task scope and intent verification, injects credentials, executes through the service adapter, and returns a semantic result. Requests without a `task_id` fall back to per-request approval. Use `?wait=true` to block until a pending request resolves."
+        },
+        {
+          "info": {
+            "name": "Execute a previously approved pending request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.clawvisor.com/api/gateway/request/:request_id/execute",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Execute a gateway request that was left `pending` for human approval, once the user has approved it. Idempotent on `request_id`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

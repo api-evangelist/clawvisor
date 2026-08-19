@@ -1,0 +1,283 @@
+{
+  "item": [
+    {
+      "id": "2ab8cfad-07a3-4eff-a6f1-7e99345fa8c9",
+      "name": "Tokens",
+      "description": {
+        "content": "Mint and revoke scoped agent tokens (admin-gated).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4b1abd8-f160-4b4f-bc75-c0ccf8112df4",
+          "name": "Mint a scoped agent token",
+          "request": {
+            "name": "Mint a scoped agent token",
+            "description": {
+              "content": "Mint a long-lived scoped agent token (admin-gated, dashboard JWT).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "513b1cfc-3edf-4aae-8e40-880a60daaa9c",
+              "name": "Token created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"token\": \"string\",\n  \"created_at\": \"2014-04-03T13:10:27.149Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2963e763-1f6d-49a1-8854-0f727b355690",
+          "name": "List agent tokens",
+          "request": {
+            "name": "List agent tokens",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2cf232f1-d788-4e57-b69b-661c25b0f81e",
+              "name": "A list of tokens (secrets not returned).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"token\": \"string\",\n    \"created_at\": \"2010-10-05T07:51:49.867Z\"\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"token\": \"string\",\n    \"created_at\": \"1974-11-27T15:09:53.132Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5ba4792-8c67-42fe-b631-bc971906ea4e",
+          "name": "Revoke an agent token",
+          "request": {
+            "name": "Revoke an agent token",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02c06321-8ae1-46a6-9fa4-00a4c471c164",
+              "name": "Token revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.clawvisor.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "930bf86c-b1c6-4f7d-a3e9-ead4da4f7f22",
+    "name": "Clawvisor Gateway Auth Tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clawvisor gateway API — the authorization layer AI agents call to act on external services (Gmail, Calendar, Drive, Contacts, GitHub, Slack, Notion, Linear, Stripe, Twilio, iMessage) without ever holding the underlying credentials. Agents declare a **task** describing their purpose and the service/action pairs they need; the user approves the scope once; and every subsequent gateway request is checked against restrictions, task scope, intent verification, and (optionally) per-request human approval before Clawvisor injects credentials, executes through an adapter, and returns a clean semantic result. This description is GENERATED by the API Evangelist enrichment pipeline from Clawvisor's public README and agent protocol (skills/clawvisor/SKILL.md.tmpl); Clawvisor does not publish an OpenAPI document. Every path, method, field, and status below is documented in github.com/clawvisor/clawvisor.\n\nContact Support:\n Name: Clawvisor",
+      "type": "text/plain"
+    }
+  }
+}
