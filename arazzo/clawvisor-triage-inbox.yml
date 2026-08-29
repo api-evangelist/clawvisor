@@ -7,68 +7,74 @@ info:
     messages through the gateway under scope, then complete the task. Every
     operationId is verified against openapi/clawvisor-gateway-openapi.yml.
 sourceDescriptions:
-  - name: clawvisor
-    url: ../openapi/clawvisor-gateway-openapi.yml
-    type: openapi
+- name: catalogApi
+  url: ../openapi/clawvisor-catalog-api-openapi.yml
+  type: openapi
+- name: gatewayApi
+  url: ../openapi/clawvisor-gateway-api-openapi.yml
+  type: openapi
+- name: tasksApi
+  url: ../openapi/clawvisor-tasks-api-openapi.yml
+  type: openapi
 workflows:
-  - workflowId: approveScopeAndTriage
-    summary: Declare a task, get approval, read messages under scope, complete.
-    inputs:
-      type: object
-      properties:
-        service: { type: string, default: google.gmail }
-    steps:
-      - stepId: catalog
-        operationId: fetchCatalog
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: declareTask
-        operationId: createTask
-        requestBody:
-          contentType: application/json
-          payload:
-            purpose: Triage the inbox — list and read recent messages. Read only.
-            authorized_actions:
-              - service: $inputs.service
-                action: list_messages
-                auto_execute: true
-                expected_use: List recent messages to build a triage summary.
-              - service: $inputs.service
-                action: get_message
-                auto_execute: true
-                expected_use: Read message bodies surfaced by list_messages.
-            expires_in_seconds: 1800
-        outputs:
-          taskId: $response.body#/id
-      - stepId: awaitApproval
-        operationId: getTask
-        parameters:
-          - name: id
-            in: path
-            value: $steps.declareTask.outputs.taskId
-          - name: wait
-            in: query
-            value: true
-        successCriteria:
-          - condition: $response.body#/status == "active"
-      - stepId: listMessages
-        operationId: gatewayRequest
-        requestBody:
-          contentType: application/json
-          payload:
-            service: $inputs.service
-            action: list_messages
-            params: { max_results: 10, query: "is:unread" }
-            reason: Checking for unread messages to triage.
-            request_id: req-list-001
-            task_id: $steps.declareTask.outputs.taskId
-        successCriteria:
-          - condition: $response.body#/status == "executed"
-      - stepId: complete
-        operationId: completeTask
-        parameters:
-          - name: id
-            in: path
-            value: $steps.declareTask.outputs.taskId
+- workflowId: approveScopeAndTriage
+  summary: Declare a task, get approval, read messages under scope, complete.
+  inputs:
+    type: object
+    properties:
+      service: {type: string, default: google.gmail}
+  steps:
+  - stepId: catalog
+    operationId: fetchCatalog
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: declareTask
+    operationId: createTask
+    requestBody:
+      contentType: application/json
+      payload:
+        purpose: Triage the inbox — list and read recent messages. Read only.
+        authorized_actions:
+        - service: $inputs.service
+          action: list_messages
+          auto_execute: true
+          expected_use: List recent messages to build a triage summary.
+        - service: $inputs.service
+          action: get_message
+          auto_execute: true
+          expected_use: Read message bodies surfaced by list_messages.
+        expires_in_seconds: 1800
     outputs:
-      taskId: $steps.declareTask.outputs.taskId
+      taskId: $response.body#/id
+  - stepId: awaitApproval
+    operationId: getTask
+    parameters:
+    - name: id
+      in: path
+      value: $steps.declareTask.outputs.taskId
+    - name: wait
+      in: query
+      value: true
+    successCriteria:
+    - condition: $response.body#/status == "active"
+  - stepId: listMessages
+    operationId: gatewayRequest
+    requestBody:
+      contentType: application/json
+      payload:
+        service: $inputs.service
+        action: list_messages
+        params: {max_results: 10, query: "is:unread"}
+        reason: Checking for unread messages to triage.
+        request_id: req-list-001
+        task_id: $steps.declareTask.outputs.taskId
+    successCriteria:
+    - condition: $response.body#/status == "executed"
+  - stepId: complete
+    operationId: completeTask
+    parameters:
+    - name: id
+      in: path
+      value: $steps.declareTask.outputs.taskId
+  outputs:
+    taskId: $steps.declareTask.outputs.taskId
