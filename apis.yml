@@ -130,6 +130,8 @@ apis:
   - type: Arazzo
     url: arazzo/clawvisor-triage-inbox.yml
 common:
+- type: Website
+  url: https://www.clawvisor.com/
 - type: Overlay
   url: overlays/clawvisor-gateway-overlay.yaml
 - type: DeveloperPortal
