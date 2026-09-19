@@ -97,6 +97,8 @@ apis:
   humanURL: https://github.com/clawvisor/clawvisor
   baseURL: https://app.clawvisor.com
   tags:
+  - Gateways
+  tags_raw:
   - Gateway
   properties:
   - type: OpenAPI
