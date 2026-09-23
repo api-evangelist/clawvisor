@@ -1,36 +1,52 @@
-generated: '2026-07-18'
+generated: '2026-09-19'
 method: searched
-description: >-
-  Results of probing the /.well-known/ discovery surface for the Clawvisor
-  hosts. app.clawvisor.com is a React SPA whose catch-all returns a 200 text/html
-  shell for most /.well-known/ paths (security.txt, openid-configuration) — those
-  are recorded as present-but-not-a-real-document and NOT saved. The RFC 8414
-  OAuth 2.0 Authorization Server Metadata document is real JSON and was saved
-  verbatim; it backs the MCP server's OAuth 2.1 flow.
+description: Results of probing the /.well-known/ discovery surface for the Clawvisor hosts. app.clawvisor.com
+  is a React SPA whose catch-all returns a 200 text/html shell for most /.well-known/ paths (security.txt,
+  openid-configuration) — those are recorded as present-but-not-a-real-document and NOT saved. The RFC
+  8414 OAuth 2.0 Authorization Server Metadata document is real JSON and was saved verbatim; it backs
+  the MCP server's OAuth 2.1 flow.
 hosts:
+- host: https://app.clawvisor.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    type: application/json
+    file: clawvisor-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    status: 200
+    type: text/html
+    note: SPA shell, not a real security.txt — not saved.
+  - path: /.well-known/openid-configuration
+    status: 200
+    type: text/html
+    note: SPA shell, not real OIDC discovery (server is OAuth 2.1, not OIDC) — not saved.
+  - path: /.well-known/api-catalog
+    status: 302
+  - path: /.well-known/ai-plugin.json
+    status: 302
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: clawvisor-app-oauth-protected-resource.json
+    bytes: 99
+  path_echo_control: passed
+- host: https://clawvisor.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+  - path: /llms.txt
+    status: 200
+    type: text/plain
+    file: ../llms/clawvisor-llms.txt
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
   - host: https://app.clawvisor.com
-    documents:
-      - path: /.well-known/oauth-authorization-server
-        status: 200
-        type: application/json
-        file: clawvisor-oauth-authorization-server.json
-      - path: /.well-known/security.txt
-        status: 200
-        type: text/html
-        note: SPA shell, not a real security.txt — not saved.
-      - path: /.well-known/openid-configuration
-        status: 200
-        type: text/html
-        note: SPA shell, not real OIDC discovery (server is OAuth 2.1, not OIDC) — not saved.
-      - path: /.well-known/api-catalog
-        status: 302
-      - path: /.well-known/ai-plugin.json
-        status: 302
-  - host: https://clawvisor.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 302
-      - path: /llms.txt
-        status: 200
-        type: text/plain
-        file: ../llms/clawvisor-llms.txt
+    path: /.well-known/oauth-protected-resource
+    file: clawvisor-app-oauth-protected-resource.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
