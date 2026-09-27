@@ -76,6 +76,33 @@ paths:
                 $ref: '#/components/schemas/GatewayResponse'
 components:
   schemas:
+    GatewayResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - executed
+          - pending
+          - blocked
+          - restricted
+          - pending_task_approval
+          - pending_scope_expansion
+          - task_expired
+          - error
+        result:
+          type: object
+          properties:
+            summary:
+              type: string
+            data: {}
+        audit_id:
+          type: string
+        error:
+          type: string
+        code:
+          type: string
+          description: Machine error code, e.g. SERVICE_NOT_CONFIGURED, MISSING_SESSION_ID.
     Error:
       type: object
       properties:
@@ -118,33 +145,6 @@ components:
             callback_url:
               type: string
               format: uri
-    GatewayResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - executed
-          - pending
-          - blocked
-          - restricted
-          - pending_task_approval
-          - pending_scope_expansion
-          - task_expired
-          - error
-        result:
-          type: object
-          properties:
-            summary:
-              type: string
-            data: {}
-        audit_id:
-          type: string
-        error:
-          type: string
-        code:
-          type: string
-          description: Machine error code, e.g. SERVICE_NOT_CONFIGURED, MISSING_SESSION_ID.
   securitySchemes:
     agentToken:
       type: http

@@ -175,6 +175,15 @@ components:
           - lenient
           - false
           description: Per-scope intent verification mode.
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        code:
+          type: string
     Task:
       type: object
       properties:
@@ -252,15 +261,6 @@ components:
           additionalProperties: true
           description: Known params, or `$chain` for values that come from a prior call's results.
         reason:
-          type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        code:
           type: string
   securitySchemes:
     agentToken:
