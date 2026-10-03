@@ -46,6 +46,15 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        code:
+          type: string
     Catalog:
       type: object
       properties:
@@ -68,15 +77,6 @@ components:
           type: array
           items:
             type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        code:
-          type: string
   securitySchemes:
     agentToken:
       type: http

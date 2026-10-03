@@ -150,31 +150,6 @@ paths:
                 $ref: '#/components/schemas/Task'
 components:
   schemas:
-    AuthorizedAction:
-      type: object
-      required:
-      - service
-      - action
-      properties:
-        service:
-          type: string
-          description: Service (optionally with account alias), e.g. `google.gmail:user@example.com`.
-        action:
-          type: string
-          description: Action on the service, e.g. `list_messages`, `send_message`.
-        auto_execute:
-          type: boolean
-          description: When true, in-scope requests run immediately; false requires per-request approval.
-        expected_use:
-          type: string
-          description: Per-action description checked against actual request params by intent verification.
-        verification:
-          type: string
-          enum:
-          - strict
-          - lenient
-          - false
-          description: Per-scope intent verification mode.
     Error:
       type: object
       properties:
@@ -184,36 +159,6 @@ components:
           type: string
         code:
           type: string
-    Task:
-      type: object
-      properties:
-        id:
-          type: string
-        purpose:
-          type: string
-        status:
-          type: string
-          enum:
-          - pending_approval
-          - active
-          - pending_scope_expansion
-          - completed
-          - denied
-          - expired
-          - revoked
-        lifetime:
-          type: string
-          enum:
-          - session
-          - standing
-          - sliding
-        authorized_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedAction'
-        expires_at:
-          type: string
-          format: date-time
     TaskCreate:
       type: object
       required:
@@ -245,6 +190,36 @@ components:
           type: string
           format: uri
           description: URL Clawvisor POSTs a task callback to on approval/denial/expansion/expiry.
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        purpose:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending_approval
+          - active
+          - pending_scope_expansion
+          - completed
+          - denied
+          - expired
+          - revoked
+        lifetime:
+          type: string
+          enum:
+          - session
+          - standing
+          - sliding
+        authorized_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedAction'
+        expires_at:
+          type: string
+          format: date-time
     PlannedCall:
       type: object
       required:
@@ -262,6 +237,31 @@ components:
           description: Known params, or `$chain` for values that come from a prior call's results.
         reason:
           type: string
+    AuthorizedAction:
+      type: object
+      required:
+      - service
+      - action
+      properties:
+        service:
+          type: string
+          description: Service (optionally with account alias), e.g. `google.gmail:user@example.com`.
+        action:
+          type: string
+          description: Action on the service, e.g. `list_messages`, `send_message`.
+        auto_execute:
+          type: boolean
+          description: When true, in-scope requests run immediately; false requires per-request approval.
+        expected_use:
+          type: string
+          description: Per-action description checked against actual request params by intent verification.
+        verification:
+          type: string
+          enum:
+          - strict
+          - lenient
+          - 'off'
+          description: Per-scope intent verification mode.
   securitySchemes:
     agentToken:
       type: http
