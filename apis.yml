@@ -132,6 +132,9 @@ apis:
   - type: Arazzo
     url: arazzo/clawvisor-triage-inbox.yml
 common:
+- type: CapabilityMap
+  url: capabilities/clawvisor-capability-edges.yml
+  name: Clawvisor Business Capability Map
 - type: Website
   url: https://www.clawvisor.com/
 - type: Overlay

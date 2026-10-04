@@ -1,0 +1,35 @@
+slug: clawvisor
+provider: Clawvisor
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Tokens
+  spec_file: clawvisor-tokens-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /api/tokens 'Mint a scoped agent token'; DELETE /api/tokens/{id} 'Revoke an agent token'
+  reason: Issuance, listing, and revocation of scoped credentials for agent identities is credential/access
+    management. Could also be read as developer credential management, but the consumer here is an AI
+    agent acting on user resources.
+- tag: Gateway
+  spec_file: clawvisor-gateway-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: 'POST /api/gateway/request ''Execute an authorized action''; ''Execute a previously approved
+    pending request''; vendor: ''Agents never hold downstream credentials ... the user approves that scope'''
+  reason: The gateway proxies actions on behalf of agents only after scope approval — a brokered access-control/credential-mediation
+    surface, i.e. identity & access management. Some ambiguity since the operations are a generic proxy.
