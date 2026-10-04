@@ -76,6 +76,15 @@ paths:
                 $ref: '#/components/schemas/GatewayResponse'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        code:
+          type: string
     GatewayRequest:
       type: object
       required:
@@ -109,15 +118,6 @@ components:
             callback_url:
               type: string
               format: uri
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        code:
-          type: string
     GatewayResponse:
       type: object
       properties:

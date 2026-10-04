@@ -150,46 +150,31 @@ paths:
                 $ref: '#/components/schemas/Task'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-        code:
-          type: string
-    TaskCreate:
+    AuthorizedAction:
       type: object
       required:
-      - purpose
-      - authorized_actions
+      - service
+      - action
       properties:
-        purpose:
+        service:
           type: string
-          description: Capability statement shown at approval and checked by intent verification.
-        authorized_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedAction'
-        planned_calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlannedCall'
-        lifetime:
+          description: Service (optionally with account alias), e.g. `google.gmail:user@example.com`.
+        action:
+          type: string
+          description: Action on the service, e.g. `list_messages`, `send_message`.
+        auto_execute:
+          type: boolean
+          description: When true, in-scope requests run immediately; false requires per-request approval.
+        expected_use:
+          type: string
+          description: Per-action description checked against actual request params by intent verification.
+        verification:
           type: string
           enum:
-          - session
-          - standing
-          - sliding
-          description: session (default, TTL), standing (until revoked), or sliding (auto-extends on use).
-        expires_in_seconds:
-          type: integer
-          description: Task TTL for session tasks.
-        callback_url:
-          type: string
-          format: uri
-          description: URL Clawvisor POSTs a task callback to on approval/denial/expansion/expiry.
+          - strict
+          - lenient
+          - 'off'
+          description: Per-scope intent verification mode.
     Task:
       type: object
       properties:
@@ -237,31 +222,46 @@ components:
           description: Known params, or `$chain` for values that come from a prior call's results.
         reason:
           type: string
-    AuthorizedAction:
+    TaskCreate:
       type: object
       required:
-      - service
-      - action
+      - purpose
+      - authorized_actions
       properties:
-        service:
+        purpose:
           type: string
-          description: Service (optionally with account alias), e.g. `google.gmail:user@example.com`.
-        action:
-          type: string
-          description: Action on the service, e.g. `list_messages`, `send_message`.
-        auto_execute:
-          type: boolean
-          description: When true, in-scope requests run immediately; false requires per-request approval.
-        expected_use:
-          type: string
-          description: Per-action description checked against actual request params by intent verification.
-        verification:
+          description: Capability statement shown at approval and checked by intent verification.
+        authorized_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedAction'
+        planned_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlannedCall'
+        lifetime:
           type: string
           enum:
-          - strict
-          - lenient
-          - 'off'
-          description: Per-scope intent verification mode.
+          - session
+          - standing
+          - sliding
+          description: session (default, TTL), standing (until revoked), or sliding (auto-extends on use).
+        expires_in_seconds:
+          type: integer
+          description: Task TTL for session tasks.
+        callback_url:
+          type: string
+          format: uri
+          description: URL Clawvisor POSTs a task callback to on approval/denial/expansion/expiry.
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        code:
+          type: string
   securitySchemes:
     agentToken:
       type: http
