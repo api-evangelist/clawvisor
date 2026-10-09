@@ -6,6 +6,17 @@ info:
     Declare a read-scoped task, wait for the user to approve it, list and read
     messages through the gateway under scope, then complete the task. Every
     operationId is verified against openapi/clawvisor-gateway-openapi.yml.
+  x-realizes-capability-ids:
+  - BC-620.20
+  x-capability-derivation:
+    method: 'deterministic join: sourceDescriptions -> per-tag OpenAPI -> tag/capability edge. No classification at this step.'
+    min_confidence: 0.7
+    sources:
+    - capability_id: BC-620.20
+      capability_name: Identity & Access Management
+      spec: clawvisor-gateway-api-openapi.yml
+      confidence: 0.7
+    model: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities, CC BY 4.0
 sourceDescriptions:
 - name: catalogApi
   url: ../openapi/clawvisor-catalog-api-openapi.yml
