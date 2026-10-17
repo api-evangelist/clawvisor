@@ -150,6 +150,15 @@ paths:
                 $ref: '#/components/schemas/Task'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        code:
+          type: string
     AuthorizedAction:
       type: object
       required:
@@ -205,23 +214,6 @@ components:
         expires_at:
           type: string
           format: date-time
-    PlannedCall:
-      type: object
-      required:
-      - service
-      - action
-      - params
-      properties:
-        service:
-          type: string
-        action:
-          type: string
-        params:
-          type: object
-          additionalProperties: true
-          description: Known params, or `$chain` for values that come from a prior call's results.
-        reason:
-          type: string
     TaskCreate:
       type: object
       required:
@@ -253,14 +245,22 @@ components:
           type: string
           format: uri
           description: URL Clawvisor POSTs a task callback to on approval/denial/expansion/expiry.
-    Error:
+    PlannedCall:
       type: object
+      required:
+      - service
+      - action
+      - params
       properties:
-        status:
+        service:
           type: string
-        error:
+        action:
           type: string
-        code:
+        params:
+          type: object
+          additionalProperties: true
+          description: Known params, or `$chain` for values that come from a prior call's results.
+        reason:
           type: string
   securitySchemes:
     agentToken:
