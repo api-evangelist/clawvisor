@@ -64,12 +64,140 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Clawvisor is the authorization layer for AI agents — a Y Combinator (Spring 2026) security gateway that sits between an AI agent and the tools it acts on (Gmail, Calendar, Drive, Contacts, GitHub, Slack, Notion, Linear, Stripe, Twilio, iMessage). Agents never hold downstream credentials: they declare a task describing their purpose and the service/action pairs they need, the user approves that scope once, and Clawvisor enforces restrictions, task scope, and LLM intent verification on every request before injecting vaulted, short-lived credentials, executing through an adapter, and writing a full audit trail.
+Clawvisor is the authorization layer for AI agents — a Y Combinator (Spring 2026) security gateway that sits between an AI agent and the tools it acts on (Gmail, Calendar, Drive, Contacts, GitHub, Slack, Notion, Linear, Stripe, Twilio, iMessage). Agents never hold downstream credentials: they declare a task describing their purpose and the service/action pairs they need, the user approves that scope once, and Clawvisor enforces restrictions, task scope, and LLM intent verification on every request before injecting vaulted, short-lived credentials, executing through an adapter, and writing a full audit trail. It ships open-core as a self-hostable Go daemon with a CLI, web dashboard, TUI, and an OAuth 2.1 MCP server, plus an official Claude Code plugin. Agents integrate over a plain HTTP gateway or MCP — no SDK or agent-code changes required.
 
-Ships open-core as a self-hostable Go daemon with a CLI, web dashboard, TUI, and an OAuth 2.1 MCP server, plus an official Claude Code plugin. Agents integrate over a plain HTTP gateway or MCP.
+**Areas:** AI Agents · Authorization · Security · Identity · Access Control · MCP · Credential Management · Governance · Developer Tools
 
-- Website: https://clawvisor.com
-- Source: https://github.com/clawvisor/clawvisor
-- Backed by: y-combinator
+## Clawvisor on APIs.io
 
-This profile was enriched by the API Evangelist enrichment pipeline from Clawvisor's public developer surface. The Gateway OpenAPI in `openapi/` is generated from the published README and agent protocol; Clawvisor does not publish an OpenAPI document.
+Everything profiled for Clawvisor is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/clawvisor/](https://apis.io/providers/clawvisor/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- [Clawvisor Auth API](https://apis.io/apis/clawvisor/clawvisor-auth-api/) — Local magic-link session exchange.
+- [Clawvisor Catalog API](https://apis.io/apis/clawvisor/clawvisor-catalog-api/) — Discover the services and actions available to the agent.
+- [Clawvisor Gateway API](https://apis.io/apis/clawvisor/clawvisor-gateway-api/) — Execute authorized actions on downstream services through the gateway.
+- [Clawvisor Tasks API](https://apis.io/apis/clawvisor/clawvisor-tasks-api/) — Declare, approve, expand, and complete task scopes.
+- [Clawvisor Tokens API](https://apis.io/apis/clawvisor/clawvisor-tokens-api/) — Mint and revoke scoped agent tokens (admin-gated).
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (1)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Clawvisor — approve-scope-and-triage](https://apis.io/arazzos/clawvisor/clawvisor-triage-inbox/)
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Clawvisor Callbacks Webhooks](https://apis.io/asyncapis/clawvisor/clawvisor-callbacks-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [clawvisor](https://apis.io/servers/clawvisor/clawvisor/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Clawvisor Agentic Access](https://apis.io/agentic-access/clawvisor/clawvisor-agentic-access/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Clawvisor Gateway Auth API](https://apis.io/collections/clawvisor/open-clawvisor-auth-api/)
+- [Clawvisor Gateway Auth Catalog API](https://apis.io/collections/clawvisor/open-clawvisor-catalog-api/)
+- [Clawvisor Auth Gateway API](https://apis.io/collections/clawvisor/open-clawvisor-gateway-api/)
+- [Clawvisor Gateway Auth Tasks API](https://apis.io/collections/clawvisor/open-clawvisor-tasks-api/)
+- [Clawvisor Gateway Auth Tokens API](https://apis.io/collections/clawvisor/open-clawvisor-tokens-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Clawvisor Gateway Overlay](https://apis.io/overlays/clawvisor/clawvisor-gateway-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Clawvisor Authentication](https://apis.io/security/clawvisor/clawvisor-authentication/)
+- [Clawvisor Domain Security](https://apis.io/security/clawvisor/clawvisor-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.clawvisor.com/)
+- [Documentation](https://github.com/clawvisor/clawvisor/tree/main/docs)
+- [Getting started](https://github.com/clawvisor/clawvisor#get-started)
+- [API reference](https://github.com/clawvisor/clawvisor#agent-integration)
+- [Pricing](https://clawvisor.com/pricing)
+- [Sign up](https://app.clawvisor.com/register)
+- [Support](https://github.com/clawvisor/clawvisor/issues)
+- [Blog](https://www.clawvisor.com/blog)
+- [Terms of service](https://clawvisor.com/terms)
+- [Privacy policy](https://clawvisor.com/privacy)
+- [GitHub](https://github.com/clawvisor)
+
+## API Evangelist rating
+
+**Kin Score 46.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 55.2 |
+| Contract governance | 18.2 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 71.4 |
+| Access clarity | 31.6 |
+
+**Agent readiness 54.8** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/clawvisor/](https://apis.io/providers/clawvisor/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Clawvisor: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/clawvisor/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
